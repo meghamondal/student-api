@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
+from typing import List, Optional
 import csv
 
 app = FastAPI()
@@ -23,7 +24,9 @@ with open("students.csv", newline="", encoding="utf-8") as f:
         })
 
 @app.get("/api")
-def get_students(class_: list[str] | None = Query(default=None, alias="class")):
+def get_students(
+    class_: Optional[List[str]] = Query(default=None, alias="class")
+):
 
     if class_ is None:
         return {"students": students_data}
